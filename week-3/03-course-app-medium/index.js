@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 const jwt = require('jsonwebtoken');
 const bodyParser = require('body-parser');
+const fs = require('fs')
 app.use(express.json());
 app.use(bodyParser.json());
 
@@ -9,6 +10,22 @@ let ADMINS = [];
 let USERS = [];
 let COURSES = [];
 
+function readFromFile(path)
+fs.readFile(path,'utf8', (err, data)=>{
+  if(err){
+    console.error(err);
+  }
+  return data;
+});
+
+function writeToFile(path, data){
+  fs.writeFile(path, data, (err)=>{
+    if(err){
+      console.error(err);
+    }
+    console.log("File successfully admitted");
+  });
+}
 const secretKey = "S3cr3t"
 
 const generateJwt = (user) =>{
@@ -57,9 +74,12 @@ const userAuthenticationJwt = (req, res, next) => {
 app.post('/admin/signup', (req, res) => {
   // logic to sign up admin
   const admin = req.body;
-  const adminAlreadyExist = ADMINS.find(a=> a.username == admin.username)
+  const path = 'week-3\x03-course-app-medium\ADMINS.json';
+  const fileData = JSON.stringify(readFromFile(path));
+  const adminAlreadyExist = fileData.find(f=> f.username == admin.username)
   if(!adminAlreadyExist){
     ADMINS.push(admin);
+    writeToFile(JSON.parse(path, ADMINS));
     const token = generateJwt(admin);
     res.json({message: 'Admin created successfully', authToken: token}).send();
   }else{
