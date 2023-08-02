@@ -10,16 +10,19 @@ let ADMINS = [];
 let USERS = [];
 let COURSES = [];
 
-function readFromFile(path)
-fs.readFile(path,'utf8', (err, data)=>{
-  if(err){
-    console.error(err);
-  }
-  return data;
-});
+try{
+  ADMINS = JSON.parse(fs.readFileSync('ADMINS.json'));
+  USERS = JSON.parse(fs.readFileSync("USERS.json"));
+  COURSES = JSON.parse(fs.readFileSync("COURSES.json"));
+
+}catch{
+  ADMINS = [];
+  USERS = [];
+  COURSES = [];
+}
 
 function writeToFile(path, data){
-  fs.writeFile(path, data, (err)=>{
+  fs.writeFile(path, JSON.stringify(data), (err)=>{
     if(err){
       console.error(err);
     }
@@ -74,16 +77,15 @@ const userAuthenticationJwt = (req, res, next) => {
 app.post('/admin/signup', (req, res) => {
   // logic to sign up admin
   const admin = req.body;
-  const path = 'week-3\x03-course-app-medium\ADMINS.json';
-  const fileData = JSON.stringify(readFromFile(path));
-  const adminAlreadyExist = fileData.find(f=> f.username == admin.username)
+  console.log(ADMINS);
+  const adminAlreadyExist = ADMINS.find(a=> a.username == admin.username)
   if(!adminAlreadyExist){
     ADMINS.push(admin);
-    writeToFile(JSON.parse(path, ADMINS));
+    writeToFile('ADMINS.json', ADMINS);
     const token = generateJwt(admin);
     res.json({message: 'Admin created successfully', authToken: token}).send();
   }else{
-    res.status(401).json({message: 'Admin already exits'}).send();
+    res.status(401).json({message: 'Admin already exits'});
   }
 });
 
