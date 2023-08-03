@@ -137,7 +137,7 @@ app.put('/admin/courses/:courseId', adminAuthenticaJwt, (req, res) => {
     const updatedCourse = {...COURSES[courseIndex], ...req.body};
     COURSES[courseIndex] = updatedCourse;
     writeToFile('COURSES.json', COURSES);
-    res.json({message: "Course Updated Successfully"}).json();
+    res.json({message: "Course Updated Successfully"}).send();
   }else{
     res.status(404).json("Course not found");
   }
