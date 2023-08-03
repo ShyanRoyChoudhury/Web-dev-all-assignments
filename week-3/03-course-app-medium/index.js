@@ -29,6 +29,22 @@ function writeToFile(path, data){
     console.log("File successfully admitted");
   });
 }
+
+function appendToFile(path, data){
+  // fs.appendFile(path, JSON.stringify(data), (err)=>{
+  //   if(err){
+  //     console.error(err);
+  //   }
+  //   console.log("File successfully updated");
+  // })
+
+  fs.readFile(path, 'utf8', (err, data)=>{
+    if(err){
+      console.log(err);
+    }else{
+    }
+  });
+}
 const secretKey = "S3cr3t"
 
 const generateJwt = (user) =>{
@@ -106,6 +122,7 @@ app.post('/admin/courses', adminAuthenticaJwt, (req, res) => {
   const course = req.body;
   course.id = Date.now();
   COURSES.push(course);
+  writeToFile('COURSES.json',COURSES);
   res.json({
     message:"Course created successfully", 
     courseID:course.id
@@ -116,10 +133,10 @@ app.put('/admin/courses/:courseId', adminAuthenticaJwt, (req, res) => {
   // logic to edit a course
   const courseId = req.params.courseId;
   const courseIndex = COURSES.findIndex(c=> c.id == courseId);
-
   if(courseIndex > -1){
     const updatedCourse = {...COURSES[courseIndex], ...req.body};
     COURSES[courseIndex] = updatedCourse;
+    writeToFile('COURSES.json', COURSES);
     res.json({message: "Course Updated Successfully"}).json();
   }else{
     res.status(404).json("Course not found");
@@ -138,6 +155,7 @@ app.post('/users/signup', (req, res) => {
   const userAreadyExist = USERS.find(u=> u.username == user.username);
   if(!userAreadyExist){
     USERS.push(user);
+    writeToFile('USERS.json', USERS);
     const token = generateJwt(user);
     res.json({message: "User created Successfully", authToken: token}).send();
   }else{
@@ -159,7 +177,6 @@ app.post('/users/login', (req, res) => {
 
 app.get('/users/courses', userAuthenticationJwt, (req, res) => {
   // logic to list all courses
-  //console.log("Courses:", COURSES); working
   res.json({courses: COURSES}).send();
 
 });
@@ -181,6 +198,7 @@ app.post('/users/courses/:courseId', (req, res) => {
         user.purchasedCourses = [];
       }
       user.purchasedCourses.push(course);
+      writeToFile('USERS.json', USERS);
       res.json({message:"Course purchased Successfully"}).send();
     }
   }
@@ -188,7 +206,8 @@ app.post('/users/courses/:courseId', (req, res) => {
 
 app.get('/users/purchasedCourses', (req, res) => {
   // logic to view purchased courses
-   const user = USERS.find(u=>u.id === req.headers.username);
+   const user = USERS.find(u=>u.username === req.headers.username);
+   console.log(user)
    if(user && user.purchasedCourses){
     res.json({purchasedCourse: user.purchasedCourses}).send();
    }else{
