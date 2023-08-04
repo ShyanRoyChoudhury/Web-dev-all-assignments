@@ -20,9 +20,9 @@ const userSchema = new mongoose.Schema({
 });
 const courseSchema = new mongoose.Schema({
   title: String,
-  description: {type: String},
+  description: String,
   price: Number,
-  imageLink: {type: String},
+  imageLink: String,
   published:Boolean
 });
 
@@ -38,11 +38,6 @@ const secretKey = "S3cr3t";
 
 const generateJwt = (user, role) => {
   console.log(user)
-  //console.log(user.username)
-  // if (!user || !user.username || !role) {
-  //   throw new Error("Invalid user or role provided");
-  // }
-  
   const payload = { username: user.username, role: role};
   return jwt.sign(payload, secretKey, { expiresIn: "1h" });
 };
@@ -76,7 +71,7 @@ const userAuthenticationJwt = (req, res, next) => {
       } else {
         //console.log(user);
         req.user = user;
-        console.log("Authenticated User:", req.user);
+        //console.log("Authenticated User:", req.user);
         next();
       }
     });
@@ -112,22 +107,21 @@ app.post("/admin/login", async (req, res) => {
 
 app.post("/admin/courses", adminAuthenticaJwt, async (req, res) => {
   // logic to create a course
-  const {username, password} = req.headers;
-  const admin = await Admin.findOne({username, password})
-  if(!admin){
-    res.status(403).json({message: "Invalid username or password"});
-  }else{
-    const course = new Course(req.body);
-    course.id = Date.now();
-    await course.save();
-    res.json({message: "Course created successfully", courseID: course.id});
-  }
+    const {username, password} = req.headers;
+    const admin = await Admin.findOne({username, password})
+    if(!admin){
+      res.status(403).json({message: "Invalid username or password"});
+    }else{
+      const course = new Course(req.body);
+      await course.save();
+      res.json({message: "Course created successfully", courseID: course.id});
+    }
 });
 
 app.put("/admin/courses/:courseId", adminAuthenticaJwt, async (req, res) => {
   // logic to edit a course
   const courseId = req.params.courseId;
-  const course = await Course.findOneAndUpdate(courseId, req.body, {new: true})
+  const course = await Course.findByIdAndUpdate(req.params.courseId, req.body, {new: true});
   if (course) {
     res.json({ message: "Course Updated Successfully" }).send();
   } else {
@@ -145,11 +139,11 @@ app.get("/admin/courses", adminAuthenticaJwt, async(req, res) => {
 app.post("/users/signup", async (req, res) => {
   // logic to sign up user
   const {username, password} = req.body;
-  const user = await User.findOne({username, password});
+  const user = await User.findOne({username});
   if (!user) {
-    user = new User({ username, password });
-    await user.save();
-    const token = generateJwt(user, 'user');
+    const newUser = new User({ username, password });
+    await newUser.save();
+    const token = generateJwt(newUser, 'user');
     res.json({ message: "User created Successfully", authToken: token }).send();
   } else {
     res.status(401).json({ message: "User already exists" });
@@ -170,7 +164,7 @@ app.post("/users/login", async (req, res) => {
 
 app.get("/users/courses", userAuthenticationJwt, async (req, res) => {
   // logic to list all courses
-  const courses = await Course.find({pubished: true});
+  const courses = await Course.find({published: true});
   res.json({ courses: courses }).send();
 });
 
@@ -178,17 +172,19 @@ app.post("/users/courses/:courseId", userAuthenticationJwt , async (req, res) =>
   // logic to purchase a course
   const courseId = req.params.courseId;
   const {username, password} = req.headers;
-  const course = await Course.findById({courseId});
+  const course = await Course.findById(courseId);
+  console.log(course);
   if (!course) {
     res.status(404).json({ message: "Course not found" });
   } else {
     const user = await User.findOne({username, password});
+    console.log(user);
     if (!user) {
       res.status(403).json({ message: "User not found" });
     } else {
-      if (!user.purchasedCourse) {
-        user.purchasedCourses = [];
-      }
+      // if (!user.purchasedCourse) {
+      //   user.purchasedCourses = [];
+      // }
       user.purchasedCourses.push(course);
       await user.save();
       res.json({ message: "Course purchased Successfully" }).send();
