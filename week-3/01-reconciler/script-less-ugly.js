@@ -4,7 +4,8 @@ function createDomElements(data) {
 
   // Get the current children of the parent element and convert it to an array
   var currentChildren = Array.from(parentElement.children);
-
+  
+  console.log(currentChildren);
   let added = 0, deleted = 0, updated = 0;
   // Process each item in the data array
   data.forEach(function(item) {
@@ -19,9 +20,9 @@ function createDomElements(data) {
       existingChild.children[0].innerHTML = item.title;
       existingChild.children[1].innerHTML = item.description;
       // Remove it from the currentChildren array
-      currentChildren = currentChildren.filter(function(child) {
-        return child !== existingChild;
-      });
+      // currentChildren = currentChildren.filter(function(child) {
+      //   return child !== existingChild;
+      // });
     } else {
       added++;
       // If it doesn't exist, create it
@@ -47,8 +48,15 @@ function createDomElements(data) {
 
   // Any children left in the currentChildren array no longer exist in the data, so remove them
   currentChildren.forEach(function(child) {
-    deleted++;
-    parentElement.removeChild(child);
+    
+    var stillPresent = data.find(function (item) {
+      return child.dataset.id === String(item.id);
+    });
+
+    if(!stillPresent){
+      deleted++;
+      parentElement.removeChild(child);
+    }
   });
 
   console.log(added);
@@ -68,4 +76,15 @@ window.setInterval(() => {
   }
 
   createDomElements(todos)
-}, 5000)
+}, 2000)
+
+// let todos = [];
+// for (let i = 0; i<Math.floor(Math.random() * 100); i++) {
+//   todos.push({
+//     title: "Go to gym",
+//     description: "Go to gym form 5",
+//     id: i+1
+//   });
+// }
+
+// createDomElements(todos);  
