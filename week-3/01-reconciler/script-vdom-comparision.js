@@ -4,7 +4,8 @@ function createDomElements(existingDOM, currentDOM) {
   var parentElement = document.getElementById("mainArea");
 
   let added = 0, deleted = 0, updated = 0;
-
+  console.log(existingDOM);
+  console.log(currentDOM);
   // Now, we'll compare our new vDOM to our old vDOM
   currentDOM.forEach(function(item) {
     // Check if an element with this ID already exists in the old vDOM
