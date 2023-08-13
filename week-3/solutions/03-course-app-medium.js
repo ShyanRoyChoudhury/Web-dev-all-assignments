@@ -1,9 +1,19 @@
 const express = require('express');
 const jwt = require('jsonwebtoken');
 const fs = require('fs');
+
+const cors = require("cors");
 const app = express();
 
+const corsOptions = {
+  origin: "*",
+  credentials: true,
+  methods: ["GET", "POST", "PUT", "DELETE"], // Add other necessary methods
+  allowedHeaders: ["Content-Type", "authorization", 'username', 'password']
+};
+
 app.use(express.json());
+app.use(cors(corsOptions));
 
 let ADMINS = [];
 let USERS = [];
@@ -60,6 +70,9 @@ app.post('/admin/login', (req, res) => {
   const admin = ADMINS.find(a => a.username === username && a.password === password);
   if (admin) {
     const token = jwt.sign({ username, role: 'admin' }, SECRET, { expiresIn: '1h' });
+    res.header('Access-Control-Allow-Origin', 'http://localhost:5173');
+    res.header('Access-Control-Allow-Methods', 'GET,HEAD,PUT,PATCH,POST,DELETE');
+    
     res.json({ message: 'Logged in successfully', token });
   } else {
     res.status(403).json({ message: 'Invalid username or password' });

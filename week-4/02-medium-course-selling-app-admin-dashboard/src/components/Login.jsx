@@ -1,15 +1,40 @@
-import React from "react";
-
+import { useState } from "react";
+import axios from 'axios';
 /// File is incomplete. You need to add input boxes to take input for users to login.
 function Login() {
-    const [email, setEmail] = React.useState("");
+    const [cred, setCred] = useState({
+        'Content-Type': "application/json",
+        'username': '',
+        'password': ''
+    });
 
+    const handleInputData = (e)=>{
+        e.preventDefault();
+        setCred({...cred,[e.target.name]:e.target.value});
+    }
+    const loginButton = async ()=>{
+        console.log(cred)
+        try{
+            const response = await axios.post("http://localhost:3000/admin/login", null, {
+                headers: 
+                {
+                     'Content-Type': "application/json",
+                     'username': cred.username,
+                     'password': cred.password
+                 }
+            });
+            console.log(response.data);
+        }catch(err){
+            console.error(err);
+        }
+    }
     return <div>
         <h1>Login to admin dashboard</h1>
         <br/>
-        Email - <input type={"text"} onChange={e => setEmail(e.target.value)} />
+        Username - <input type="text" name="username" placeholder="Username" onChange={handleInputData} />
         <br/>
-        <button>Login</button>
+        Password - <input type="text" name="password" placeholder="Password" onChange={handleInputData}/>
+        <button onClick={loginButton}>Login</button>
         <br/>
         New here? <a href="/register">Register</a>
     </div>

@@ -49,16 +49,13 @@ function App() {
     <div>
     {todos.map(todo =>{
       return <div>
-        {todo.id}
         {todo.title}
         {todo.desciption}
         <button>Delete</button>
         <br/>
       </div>
     })}
-    
-      
-     
+
     </div>
     
   );

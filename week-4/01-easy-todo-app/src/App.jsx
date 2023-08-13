@@ -24,4 +24,4 @@ function Todo(props) {
     </div>
 }
 
-export default App
+app.listen(3000);
