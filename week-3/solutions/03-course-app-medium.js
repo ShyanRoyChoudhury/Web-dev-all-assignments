@@ -98,7 +98,7 @@ app.put('/admin/courses/:courseId', authenticateJwt, (req, res) => {
   }
 });
 
-app.get('/admin/courses', authenticateJwt, (req, res) => {
+app.get('/admin/courses',  (req, res) => {
   res.json({ courses: COURSES });
 });
 

@@ -3,7 +3,6 @@ import axios from 'axios';
 /// File is incomplete. You need to add input boxes to take input for users to login.
 function Login() {
     const [cred, setCred] = useState({
-        'Content-Type': "application/json",
         'username': '',
         'password': ''
     });
@@ -18,12 +17,14 @@ function Login() {
             const response = await axios.post("http://localhost:3000/admin/login", null, {
                 headers: 
                 {
-                     'Content-Type': "application/json",
                      'username': cred.username,
                      'password': cred.password
                  }
             });
             console.log(response.data);
+            console.log(response.data.token)
+            //sessionStorage.setItem('token-key', response.data.token);
+            localStorage.setItem('token-key', response.data.token) ;
         }catch(err){
             console.error(err);
         }
