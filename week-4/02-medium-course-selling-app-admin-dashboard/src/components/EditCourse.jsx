@@ -13,7 +13,7 @@ function Edit(){
             if(token){
                 const response = await axios.put(`http://localhost:3000/admin/courses/${id}`, course, {
                     headers:{
-        
+                        authorization: 'bearer '+token
                     }
                 });
                 console.log(response.data);
