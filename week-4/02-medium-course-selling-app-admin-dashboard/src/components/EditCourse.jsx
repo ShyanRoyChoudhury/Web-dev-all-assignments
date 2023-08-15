@@ -7,11 +7,11 @@ function Edit(){
         e.preventDefault();
         updateCourse({...course,[e.target.name]:e.target.value})
     };
-    const updateButton = async ()=>{
+    const updateButton = async (id)=>{
         try{
             const token = localStorage.getItem('token-key');
             if(token){
-                const response = axios.put('http://localhost:3000/admin/courses/${}', course, {
+                const response = await axios.put(`http://localhost:3000/admin/courses/${id}`, course, {
                     headers:{
         
                     }
