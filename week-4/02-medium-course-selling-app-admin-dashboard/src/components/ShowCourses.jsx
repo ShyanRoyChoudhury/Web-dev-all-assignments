@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from 'axios';
-
+import Navbar from './Navbar';
 
 
 function usePageRefresh(){
@@ -42,6 +42,7 @@ function ShowCourses() {
 
     return (
         <div>
+            <Navbar />
             <h1>Courses Available</h1>
             {courses.map(c =>{
                 return <Course 

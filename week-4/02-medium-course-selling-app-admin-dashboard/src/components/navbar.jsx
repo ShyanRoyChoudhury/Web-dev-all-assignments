@@ -1,6 +1,7 @@
 import { useState } from 'react';
 //import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 //import EditCourse from './components/EditCourse'
 
 function Navbar(){
@@ -16,6 +17,9 @@ function Navbar(){
     }
 
     return  <div>
+        <Link to={"/"}>
+            <div>Dashboard</div>
+        </Link>
         <input placeholder="Search course" name="courseId" onChange={handleInputData}/>
         <button onClick={searchButton}>Search</button>
     </div>
