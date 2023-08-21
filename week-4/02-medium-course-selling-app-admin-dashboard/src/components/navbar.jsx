@@ -6,14 +6,15 @@ import { Link } from 'react-router-dom';
 
 function Navbar(){
     const navigate = useNavigate();
-    const [courseId, setCourseId] = useState(null);
+    const [courseId, setCourseId] = useState('');
     const handleInputData = (e)=>{
         e.preventDefault();
-        setCourseId({...courseId, [e.target.name]:e.target.value})
+        setCourseId(e.target.value)
     }
 
+    //localStorage.setItem('search-id', courseId);
     const searchButton = async ()=>{
-        navigate("/EditCourse");
+        navigate(`/viewcourse/${courseId}`);
     }
 
     return  <div>

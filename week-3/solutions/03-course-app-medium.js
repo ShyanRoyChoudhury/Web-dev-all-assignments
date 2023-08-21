@@ -87,6 +87,15 @@ app.post('/admin/courses', authenticateJwt, (req, res) => {
   res.json({ message: 'Course created successfully', courseId: course.id });
 });
 
+app.get('/admin/viewcourse/:courseId', (req, res)=>{
+  const course = COURSES.find(c=>c.id === parseInt(req.params.courseId))
+  if(course){
+    res.json({course: course});
+  }else{
+    res.json({message: 'Course not found'});
+  }
+});
+
 app.put('/admin/courses/:courseId', authenticateJwt, (req, res) => {
   const course = COURSES.find(c => c.id === parseInt(req.params.courseId));
   if (course) {

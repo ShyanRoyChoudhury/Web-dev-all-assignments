@@ -3,9 +3,9 @@ import Login from './components/Login';
 import Landing from "./components/Landing";
 import CreateCourse from './components/CreateCourse';
 import Register from './components/Register';
-import ShowCourses from './components/ShowCourses';
+import ShowAllCourses from './components/ShowAllCourses';
 import EditCourse from './components/EditCourse';
-
+import ViewCourse from './components/ViewCourse';
 
 // This file shows how you can do routing in React.
 // Try going to /login, /register, /about, /courses on the website and see how the html changes
@@ -21,8 +21,9 @@ function App() {
                 <Route path="/login" element={<Login />} />
                 <Route path="/register" element={<Register />} />
                 <Route path="/createcourse" element={<CreateCourse />} />
-                <Route path="/showcourses" element={<ShowCourses />} />
+                <Route path="/showallcourses" element={<ShowAllCourses />} />
                 <Route path="/editcourse" element={<EditCourse />} />
+                <Route path='/viewcourse/:id' element={<ViewCourse />}/>
             </Routes>
         </Router>
     );

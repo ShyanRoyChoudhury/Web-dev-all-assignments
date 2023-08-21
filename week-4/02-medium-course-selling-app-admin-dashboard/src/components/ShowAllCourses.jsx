@@ -19,9 +19,8 @@ function usePageRefresh(){
                 });
                 const data = res.data;
                 console.log(data);
-                
                 setCourses(data.courses);
-
+                
             }catch(err){
                 console.error('Error Fetching data',err);
             }
@@ -34,7 +33,7 @@ function usePageRefresh(){
     
 }
 
-function ShowCourses() {
+function ShowAllCourses() {
     const courses = usePageRefresh()
 
     // Add code to fetch courses from the server
@@ -62,14 +61,16 @@ function Course(props) {
     return( <div>
         <h1>{props.id}</h1>
         <h2>{props.title}</h2>
-        <p>
-            <div>{props.description}</div>
-            <div>{props.price}</div>
-            <div>{props.imageLink}</div>
-            <div>{props.published}</div>
-        </p>
+        <div>
+            <ul>
+            <li>{props.description}</li>
+            <li>{props.price}</li>
+            <li>{props.imageLink}</li>
+            <li>{props.published}</li>
+            </ul>
+        </div>
     </div>
     )
 }
 
-export default ShowCourses;
+export default ShowAllCourses;

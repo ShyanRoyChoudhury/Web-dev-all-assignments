@@ -20,7 +20,7 @@ function useTodos(){
     }).then((response)=>{
       response.json().then((data)=>{
         console.log(data);
-        setTodos(data);
+        setTodos(JSON.stringify(data));
       })
     });
   }, []);
@@ -47,13 +47,12 @@ function App() {
 
   return (
     <div>
-    {todos.map(todo =>{
-      return <div>
-        {todo.title}
-        {todo.desciption}
-        <button>Delete</button>
-        <br/>
-      </div>
+    Todo list
+    {todos.map(t =>{
+      return <Todo
+        key = {t.id}
+        title={t.title}
+        description={t.desciption}/>
     })}
 
     </div>
@@ -61,5 +60,14 @@ function App() {
   );
 }
 
+function Todo(props){
+  return(
+    <div>
+      {props.id}
+      {props.title}
+      {props.description}
+    </div>
+  )
+}
 
 export default App;
