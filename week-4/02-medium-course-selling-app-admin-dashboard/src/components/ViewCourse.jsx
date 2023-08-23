@@ -14,8 +14,7 @@ function useGetData(){
         const fetchData = async ()=>{   
             try{
     
-                //const id = localStorage.getItem('search-id');
-                console.log('id:'+id);
+                
                 const res = await axios.get(`http://localhost:3000/admin/viewcourse/${id}}`) /*, null, {
                     headers:{
                         authorization: 'bearer '+ token

@@ -29,7 +29,7 @@ try {
     USERS = [];
     COURSES = [];
 }
-console.log(ADMINS);
+//console.log(ADMINS);
 
 const SECRET = 'my-secret-key';
 
@@ -133,12 +133,21 @@ app.post('/users/login', (req, res) => {
     const token = jwt.sign({ username, role: 'user' }, SECRET, { expiresIn: '1h' });
     res.json({ message: 'Logged in successfully', token });
   } else {
-    res.status(403).json({ message: 'Invalid username or password' });
+    res.json({ message: 'Invalid username or password' });
   }
 });
 
-app.get('/users/courses', authenticateJwt, (req, res) => {
+app.get('/users/courses', (req, res) => {
   res.json({ courses: COURSES });
+});
+
+app.get("/users/courses/:courseId", authenticateJwt, (req, res) => {
+  const course = COURSES.find((c) => c.id === parseInt(req.params.courseId));
+  if (course) {
+    res.json({ course: course });
+  } else {
+    res.json({ message: "Course not found" });
+  }
 });
 
 app.post('/users/courses/:courseId', authenticateJwt, (req, res) => {
