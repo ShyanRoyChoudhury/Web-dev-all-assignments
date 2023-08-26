@@ -8,13 +8,8 @@ import Navbar from './Navbar';
 
 function Landing() {
 
-    return <div>
-        <Navbar/>
+    return <div style={{}}>
         <h1>Welcome to course selling website!</h1>
-        <br/>
-        <a href="/register">Register</a>
-        <br/>
-        <a href="/login">Login</a>
         <br/>
         <a href="/showallcourses">Show Courses</a>
         <br/>
