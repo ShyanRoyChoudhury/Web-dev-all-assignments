@@ -1,5 +1,5 @@
 import React from "react";
-import axios from 'axios';
+//import axios from 'axios';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Card from '@mui/material/Card';
@@ -22,25 +22,28 @@ function Register() {
     }
     const registerCred = async () =>{
         console.log(cred)
-        const response = await axios.post("http://localhost:3000/admin/signup", cred);
-        console.log(response.data);
+        //const response = await axios.post("http://localhost:3000/admin/signup", cred);
+        //console.log(response.data);
     };
 
     return <div>
-        <center>
+        
             <div style={{
                 paddingTop: 100,
-                marginBottom:10}}>
+                marginBottom:10,
+                display:"flex",
+                justifyContent:"center"}}>
                 <Typography variant={"h6"}>
                     Register to the website
                 </Typography>
             </div>
-        </center>
+        
 
-        <center>
+        <div style={{display:"flex",
+                justifyContent:"center"}}>
             <Card variant="outlined" style={{padding:20, width: 400}}>
                 <TextField 
-                    id="outlined-basic" 
+                    id="username" 
                     fullWidth={true}
                     type={"text"} 
                     name="username" 
@@ -49,20 +52,30 @@ function Register() {
                     onChange={handleInputData}/>
                 <br/><br/>
                 <TextField 
-                    id="outlined-basic"
+                    id="password"
                     fullWidth={true} 
-                    type={"password"} 
+                    type={"password"}
                     name="password" 
                     label="Password" 
                     variant="outlined" 
                     onChange={handleInputData}/>
                 <br/><br/>
-                <Button variant="contained" onClick={registerCred}>Register</Button>
+                <Button variant="contained" onClick={()=>{
+                    let username = document.getElementById("username");
+                    let password = document.getElementById("password");
+                    console.log(element.innerHTML);  
+                }}>Register</Button>
 
             </Card>
             <br/>
+        </div>
+        <div style={{display:"flex",
+            justifyContent:"center",
+            marginTop:5
+        }}>
             Already a user? <a href="/login">Login</a>
-        </center>
+        </div>
+        
     </div>
 }
 

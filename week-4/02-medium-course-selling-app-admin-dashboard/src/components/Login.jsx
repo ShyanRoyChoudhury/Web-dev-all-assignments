@@ -1,5 +1,10 @@
 import { useState } from "react";
 import axios from 'axios';
+import Card from '@mui/material/Card';
+import TextField from '@mui/material/TextField';
+import Button from '@mui/material/Button';
+import { Typography } from "@mui/material";
+
 /// File is incomplete. You need to add input boxes to take input for users to login.
 function Login() {
     const [cred, setCred] = useState({
@@ -29,16 +34,43 @@ function Login() {
             console.error(err);
         }
     }
-    return <div>
-        <h1>Login to admin dashboard</h1>
-        <br/>
-        Username - <input type="text" name="username" placeholder="Username" onChange={handleInputData} />
-        <br/>
-        Password - <input type="text" name="password" placeholder="Password" onChange={handleInputData}/>
-        <button onClick={loginButton}>Login</button>
-        <br/>
-        New here? <a href="/register">Register</a>
-    </div>
+    return <div style={{padding:0,
+                        margin:0}}>
+        <center>
+            <div style={{paddingTop:100,
+                        marginBottom:10}}>
+            <Typography variant={"h6"}>Welcome Back</Typography>
+            </div>
+        </center>
+        
+        <center>
+            <Card variant="outlined" style={{
+            width:400,
+            padding:20
+            }}>
+                <TextField type="text" 
+                name="username"
+                fullWidth={true}
+                label="Username" 
+                variant="outlined" 
+                onChange={handleInputData}/>
+                <br/><br/>
+                <TextField type="password" 
+                name="password"
+                fullWidth={true}
+                label="Password" 
+                variant="outlined" 
+                onChange={handleInputData}/>
+                <br/><br/>
+                <Button variant="contained"
+                onClick={loginButton}>Login</Button>
+        </Card>
+            <div style={{marginTop:15}}>
+                New here? <a href="/register">Register</a>
+            </div>
+    
+        </center>
+    </div>    
 }
 
 export default Login;

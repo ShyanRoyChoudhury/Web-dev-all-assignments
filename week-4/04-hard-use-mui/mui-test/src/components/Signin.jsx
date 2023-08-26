@@ -1,5 +1,5 @@
 import React from "react";
-import axios from 'axios';
+//import axios from 'axios';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Card from '@mui/material/Card';
@@ -8,7 +8,7 @@ import { Typography } from "@mui/material";
 
 
 /// File is incomplete. You need to add input boxes to take input for users to register.
-function Register() {
+function Signin() {
     const data = {
         username: "",
         password: ""
@@ -22,22 +22,25 @@ function Register() {
     }
     const registerCred = async () =>{
         console.log(cred)
-        const response = await axios.post("http://localhost:3000/admin/signup", cred);
-        console.log(response.data);
+        //const response = await axios.post("http://localhost:3000/admin/signup", cred);
+        //console.log(response.data);
     };
 
     return <div>
-        <center>
+        
             <div style={{
                 paddingTop: 100,
-                marginBottom:10}}>
+                marginBottom:10,
+                display:"flex",
+                justifyContent:"center"}}>
                 <Typography variant={"h6"}>
-                    Register to the website
+                    Welcome back. Sign in below.
                 </Typography>
             </div>
-        </center>
+        
 
-        <center>
+        <div style={{display:"flex",
+                justifyContent:"center"}}>
             <Card variant="outlined" style={{padding:20, width: 400}}>
                 <TextField 
                     id="outlined-basic" 
@@ -57,13 +60,19 @@ function Register() {
                     variant="outlined" 
                     onChange={handleInputData}/>
                 <br/><br/>
-                <Button variant="contained" onClick={registerCred}>Register</Button>
+                <Button variant="contained" onClick={registerCred}>Signin</Button>
 
             </Card>
             <br/>
+        </div>
+        <div style={{display:"flex",
+            justifyContent:"center",
+            marginTop:5
+        }}>
             Already a user? <a href="/login">Login</a>
-        </center>
+        </div>
+        
     </div>
 }
 
-export default Register;
+export default Signin;

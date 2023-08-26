@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from 'axios';
-import Navbar from './Navbar';
-
+import Card from '@mui/material/Card';
 
 function usePageRefresh(){
     const [courses, setCourses] = useState([]);
@@ -41,7 +40,7 @@ function ShowAllCourses() {
 
     return (
         <div>
-            <Navbar />
+            
             <h1>Courses Available</h1>
             {courses.map(c =>{
                 return <Course 

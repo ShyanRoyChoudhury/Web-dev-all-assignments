@@ -43,7 +43,6 @@ function ViewCourse(){
     }else{
     return(
         <div>
-            <Navbar/>
             COURSE:
             <Course
             id = {course.id}
