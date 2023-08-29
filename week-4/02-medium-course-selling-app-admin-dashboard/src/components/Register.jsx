@@ -39,8 +39,7 @@ function Register() {
 
         <center>
             <Card variant="outlined" style={{padding:20, width: 400}}>
-                <TextField 
-                    id="outlined-basic" 
+                <TextField  
                     fullWidth={true}
                     type={"text"} 
                     name="username" 
@@ -49,7 +48,6 @@ function Register() {
                     onChange={handleInputData}/>
                 <br/><br/>
                 <TextField 
-                    id="outlined-basic"
                     fullWidth={true} 
                     type={"password"} 
                     name="password" 

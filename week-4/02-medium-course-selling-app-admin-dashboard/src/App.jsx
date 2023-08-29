@@ -17,7 +17,7 @@ function App() {
 
     //add default location to landing page
     return (
-        <div style={{width:"100%", height:"100%"}}>
+        <div style={{width:"100%", height:"100%", backgroundcolor: "#e4eeed"}}>
             <Router>
                 <Navbar/>
                 <Routes>
@@ -29,7 +29,7 @@ function App() {
                     
                     <Route path="/createcourse" element={<CreateCourse />} />
                     <Route path="/showallcourses" element={<ShowAllCourses />} />
-                    <Route path="/editcourse" element={<EditCourse />} />
+                    <Route path="/editcourse/:id" element={<EditCourse />} />
                     <Route path='/viewcourse/:id' element={<ViewCourse />}/>
                 </Routes>
             </Router>

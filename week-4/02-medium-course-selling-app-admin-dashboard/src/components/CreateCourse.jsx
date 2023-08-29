@@ -25,12 +25,12 @@ function CreateCourse() {
     const submitButton = ()=>{
         // const token = sessionStorage.getItem('token-key');
         const token = localStorage.getItem('token-key');
-        console.log(token)
         axios.post("http://localhost:3000/admin/courses", course, {
             headers:{
                 authorization: 'bearer '+token
             }
         });
+        alert('course created');
     };
 
     return <div>

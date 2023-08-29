@@ -1,8 +1,8 @@
 
 import axios from 'axios';
 import { useEffect, useState } from 'react';
-import Navbar from './Navbar';
 import { useParams } from 'react-router-dom';
+import { Course } from './ShowAllCourses';
 
 
 function useGetData(){
@@ -35,11 +35,11 @@ function useGetData(){
 
     return course;
 }
-function ViewCourse(){
+export function ViewCourse(){
     const course = useGetData();
     console.log('Course:',course)
     if(!course){
-        return <div>Loading.....</div>
+        return <div>Course doesnt exist</div>
     }else{
     return(
         <div>
@@ -54,10 +54,11 @@ function ViewCourse(){
             />
         </div>
         )
+        
     }
 }
 
-function Course(props){
+/*function Course(props){
     return <div>
         <h3>Course ID:{props.id}</h3>
         <h2>{props.title}</h2>
@@ -70,6 +71,6 @@ function Course(props){
             </ul>
         </div>
     </div>
-}
+}*/
 
 export default ViewCourse;

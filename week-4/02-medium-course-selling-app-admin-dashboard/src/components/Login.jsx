@@ -30,6 +30,7 @@ function Login() {
             console.log(response.data.token)
             //sessionStorage.setItem('token-key', response.data.token);
             localStorage.setItem('token-key', response.data.token) ;
+            window.location = '/'
         }catch(err){
             console.error(err);
         }
@@ -47,6 +48,7 @@ function Login() {
             <Card variant="outlined" style={{
             width:400,
             padding:20
+            
             }}>
                 <TextField type="text" 
                 name="username"
@@ -64,7 +66,9 @@ function Login() {
                 <br/><br/>
                 <Button variant="contained"
                 onClick={loginButton}>Login</Button>
-        </Card>
+            </Card>
+        </center>
+        <center>    
             <div style={{marginTop:15}}>
                 New here? <a href="/register">Register</a>
             </div>

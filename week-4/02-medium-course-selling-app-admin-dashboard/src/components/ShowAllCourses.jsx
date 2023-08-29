@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from 'axios';
 import Card from '@mui/material/Card';
+import { Typography } from "@mui/material";
 
 function usePageRefresh(){
     const [courses, setCourses] = useState([]);
@@ -39,9 +40,11 @@ function ShowAllCourses() {
     // and set it in the courses state variable.
 
     return (
-        <div>
-            
-            <h1>Courses Available</h1>
+        <a href="http://localhost:3000/admin/">
+        <div style={{display:"flex", flexWrap:'wrap', justifyContent:'center'}}>
+                
+            {/*<Typography variant="h3">Courses Available</Typography>*/}
+            <br/><br/>
             {courses.map(c =>{
                 return <Course 
                     key={c.id}
@@ -50,24 +53,39 @@ function ShowAllCourses() {
                     price={c.price}
                     imageLink={c.imageLink}
                     published={c.published} 
-                />
+                />  
+                
                 })}
-        </div>
+            
+        </div></a>
         )
 }
 
-function Course(props) {
+export function Course(props) {
     return( <div>
-        <h1>{props.id}</h1>
-        <h2>{props.title}</h2>
-        <div>
-            <ul>
-            <li>{props.description}</li>
-            <li>{props.price}</li>
-            <li>{props.imageLink}</li>
-            <li>{props.published}</li>
-            </ul>
-        </div>
+        
+        <Card style={{
+                width:300,
+                margin:20,
+                
+                
+            }}>
+        
+        {/*<Typography>{props.id}</Typography>
+        <Typography variant="h5">{props.title}</Typography>
+        
+        <Typography>{props.description}</Typography>
+        <img src={props.imageLink} style={{width:300}}></img>
+        <Typography>{props.price}</Typography>*/}
+         <Typography textAlign={"center"} variant="h5">{props.title}</Typography>
+        <Typography textAlign={"center"} variant="subtitle1">{props.description}</Typography>
+        <Typography>{props.price}</Typography>
+        <img src={props.imageLink} style={{width: 300}} ></img>
+        
+        
+        {/*props.published*/}
+            
+        </Card>
     </div>
     )
 }
