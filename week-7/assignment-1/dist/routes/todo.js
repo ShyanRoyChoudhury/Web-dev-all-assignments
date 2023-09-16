@@ -5,13 +5,13 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const index_1 = require("../middleware/index");
-const db_1 = __importDefault(require("../db"));
+const db_1 = require("../db");
 const router = express_1.default.Router();
 router.post('/todos', index_1.authenticateJwt, (req, res) => {
     const inputs = req.body;
     const done = false;
     const userId = req.headers["userId"];
-    const newTodo = new db_1.default({ title: inputs.title, description: inputs.description, done, userId });
+    const newTodo = new db_1.Todo({ title: inputs.title, description: inputs.description, done, userId });
     newTodo.save()
         .then((savedTodo) => {
         res.status(201).json(savedTodo);
@@ -22,7 +22,7 @@ router.post('/todos', index_1.authenticateJwt, (req, res) => {
 });
 router.get('/todos', index_1.authenticateJwt, (req, res) => {
     const userId = req.headers["userId"];
-    db_1.default.find({ userId })
+    db_1.Todo.find({ userId })
         .then((todos) => {
         res.json(todos);
     })
@@ -33,7 +33,7 @@ router.get('/todos', index_1.authenticateJwt, (req, res) => {
 router.patch('/todos/:todoId/done', index_1.authenticateJwt, (req, res) => {
     const { todoId } = req.params;
     const userId = req.headers["userId"];
-    db_1.default.findOneAndUpdate({ _id: todoId, userId }, { done: true }, { new: true })
+    db_1.Todo.findOneAndUpdate({ _id: todoId, userId }, { done: true }, { new: true })
         .then((updatedTodo) => {
         if (!updatedTodo) {
             return res.status(404).json({ error: 'Todo not found' });

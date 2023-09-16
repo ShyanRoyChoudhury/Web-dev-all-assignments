@@ -1,6 +1,6 @@
 import express from 'express';
 import  {authenticateJwt, SECRET } from "../middleware/index";
-import Todo from "../db";
+import {Todo} from "../db";
 const router = express.Router();
 
 interface CreateTodo{
