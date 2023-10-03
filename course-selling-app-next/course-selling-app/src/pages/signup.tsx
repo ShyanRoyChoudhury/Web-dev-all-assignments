@@ -51,17 +51,11 @@ function Signup() {
                     size={"large"}
                     variant="contained"
                     onClick={async () => {
-                        const response = await fetch('ec2-54-234-211-231.compute-1.amazonaws.com/admin/signup', 
-                        {
-                            method: 'POST',
-                            headers: {
-                                'Content-type': 'application/json',
-                            },
-                            body: JSON.stringify({
-                                username: email,
-                                password: password
-                            })
+                        const response = await axios.post(`${BASE_URL}/admin/signup`, {
+                            username: email,
+                            password: password
                         })
+                        let data = response.data;
                         //localStorage.setItem("token", data.token);
                         setUser({userEmail: email, isLoading: false})
                         router.push("/courses")
