@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { Card, Signup } from "ui";
+import { Card } from "ui";
 import styles from "./page.module.css";
 
 function Gradient({
@@ -55,7 +55,7 @@ export default function Page(): JSX.Element {
       <div className={styles.description}>
         <p>
           examples/basic&nbsp;
-          <code className={styles.code}>web</code>
+          <code className={styles.code}>docs</code>
         </p>
         <div>
           <a
@@ -130,10 +130,6 @@ export default function Page(): JSX.Element {
             {description}
           </Card>
         ))}
-      </div>
-
-      <div>
-        <Signup/>
       </div>
     </main>
   );
